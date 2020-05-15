@@ -1,0 +1,71 @@
+{
+  // Use o IntelliSense para aprender sobre possíveis atributos.
+  // Passe o mouse para ver as descrições dos atributos existentes.
+  // Para obter mais informações, visite: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Access Page",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/access-page.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Access Profile",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/access-profile.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Approve Certifier",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/approve-certifier.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Change Profile Name",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/change-profile-name.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Download  Github Repos",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/download-github-repo.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Fill Profile Settings",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/fill-profile-settings.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Index",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/index.js"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "description": "Google Chrome Puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "access-page": "node access-page.js",
+    "access-profile": "node access-profile.js",
+    "approve-certifier": "node approve-certifier.js",
+    "change-profile-name": "node change-profile-name.js",
+    "download-github-repo": "node download-github-repo.js",
+    "fill-profile-settings": "node fill-profile-settings.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "git-cz"
+  },
+  "author": "Carlos Eduardo Gomes <carlitoshxcx@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.9.13",
+    "puppeteer": "^3.0.4"
+  },
+  "devDependencies": {
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
