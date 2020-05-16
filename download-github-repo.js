@@ -1,43 +1,33 @@
 const REPO = require('./data/repo');
-const CREDS = require('./data/creds');
-const puppeteer = require('puppeteer');
+const credentials = require('./data/credentials');
+const utils = require('./helpers/utils');
+const selectedBrowser = require('./helpers/browser');
+const loginAt = require('./helpers/login');
 
-async function run() {
-  const browser = await puppeteer.launch({
-    headless: false
-  });
-  const page = await browser.newPage();
+(async () => {
+  const browser = await selectedBrowser.getBrowser();
+  let page = await utils.getPage(browser);
+  await page.setViewport({ width: 1400, height: 900 });
+  // await page.setViewport({ width: 1882/2, height: 1150/2 });
+  // const page = await browser.newPage();
 
-  await page.goto('https://github.com/login');
-  await page.setViewport({ width: 1080, height: 700 });
-
-  // LOGIN GITHUB
-  const USERNAME_SELECTOR = '#login_field';
-  const PASSWORD_SELECTOR = '#password';
-  const BUTTON_SELECTOR = '#login > form > div.auth-form-body.mt-3 > input.btn.btn-primary.btn-block';
-
-  await page.waitForSelector(USERNAME_SELECTOR);
-  await page.click(USERNAME_SELECTOR);
-  await page.keyboard.type(CREDS.username);
-  
-  await page.waitForSelector(PASSWORD_SELECTOR);
-  await page.click(PASSWORD_SELECTOR);
-  await page.keyboard.type(CREDS.password);
-
-  await page.waitForSelector(BUTTON_SELECTOR);
-  await Promise.all([
-    page.click(BUTTON_SELECTOR),
-    page.waitForNavigation(),
-  ]);
+  // await loginAt.github(browser, credentials);
 
   // GOTO REPO
+  const pageUrl = `https://github.com/${REPO.name}?tab=repositories`;
   await Promise.all([
-    page.goto(`https://github.com/${REPO.name}?tab=repositories`),
-    page.waitForNavigation()
+    page.goto(pageUrl, { waitUntil: 'networkidle0' }),
+    page.waitForNavigation({ waitUntil: 'domcontentloaded' })
   ]);
+
+  // Get last html content
+  page = await utils.getPage(browser);
 
   const NUM_REPOS_SELECTOR = '#user-repositories-list > ul > li';
   const LINK_REPOS_SELECTOR = '#user-repositories-list > ul > li div.col-10.col-lg-9.d-inline-block div.d-inline-block.mb-1 h3 a';
+
+  const cloneButton = '.file-navigation > .d-flex > get-repo-controller > .position-relative > .btn';
+  const downloadButton = '.position-relative > .get-repo-modal > div > .mt-2 > .flex-1';
 
   await page.waitForSelector(NUM_REPOS_SELECTOR);
 
@@ -54,20 +44,26 @@ async function run() {
       page.waitForNavigation()
     ]);
 
-    await page.waitForSelector('.file-navigation > .d-flex > get-repo-controller > .position-relative > .btn');
-    await page.click('.file-navigation > .d-flex > get-repo-controller > .position-relative > .btn');
+    await page.waitForSelector(cloneButton);
+    // await page.click(cloneButton);
+    await page.focus(cloneButton);
+    await page.keyboard.press('Enter');
+  
 
-    await page.waitForSelector('.position-relative > .get-repo-modal > div > .mt-2 > .flex-1');
-    await page.click('.position-relative > .get-repo-modal > div > .mt-2 > .flex-1');
+    await page.waitForSelector(downloadButton);
+    // await page.click(downloadButton);
+    await page.focus(downloadButton);
+    await page.keyboard.press('Enter');
+  
+    await page.waitForSelector(cloneButton);
+    // await page.click(cloneButton);
+    await page.focus(cloneButton);
+    await page.keyboard.press('Enter');
 
-    await page.waitForSelector('.file-navigation > .d-flex > get-repo-controller > .position-relative > .btn');
-    await page.click('.file-navigation > .d-flex > get-repo-controller > .position-relative > .btn');
     console.log(`-> Downloaded: ${link}`);
   }
 
-  await page.waitFor((10 * 60) * 1000);
+  // await page.waitFor((10 * 60) * 1000);
 
-  await browser.close();
-};
-
-run();
+  // await browser.close();
+})();

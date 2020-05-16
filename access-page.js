@@ -1,13 +1,15 @@
 const utils = require('./helpers/utils');
 const selectedBrowser = require('./helpers/browser');
-const selectedLogin = require('./helpers/login');
+const loginAt = require('./helpers/login');
+const user = require('../data/user');
+
 
 (async () => {
   const browser = await selectedBrowser.getBrowser();
   let page = await utils.getPage(browser);
   await page.setViewport({ width: 1882/2, height: 1150/2 });
 
-  // await selectedLogin.login(browser);
+  // await loginAt.localhost(browser, user);
 
   const pageUrl = `http://localhost:8080/profile/settings`;
   await Promise.all([

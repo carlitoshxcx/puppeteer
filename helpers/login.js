@@ -1,17 +1,16 @@
 const utils = require('../helpers/utils');
-const user = require('../data/user');
 
 /**
  * Login user in marketplace
- * @param page: Page
+ * @param browser: Browser
  */
-async function login(browser) {
+async function localhost(browser, user) {
   const pageUrl = `http://localhost:8080/login`;
   let page = await utils.getPage(browser);
 
   await Promise.all([
     page.goto(pageUrl, { waitUntil: 'networkidle0' }),
-    page.waitForNavigation()
+    page.waitForNavigation({ waitUntil: 'domcontentloaded' })
   ]);
 
   // Get last html content
@@ -33,10 +32,74 @@ async function login(browser) {
   // Press call to action button
   await page.waitForSelector(ctaButton);
   await Promise.all([
-    page.click(ctaButton),
+    // page.click(ctaButton),
+    page.focus(ctaButton),
     page.keyboard.press('Enter'),
-    page.waitForNavigation()
+    page.waitForNavigation({ waitUntil: 'domcontentloaded' })
   ]);
 }
 
-module.exports.login = login;
+/**
+ * Login in GitHub
+ * @param browser: Browser
+ */
+async function github(browser, user) {
+  const pageUrl = `https://github.com/login`;
+  const emailInput = '#login_field';
+  const passwordInput = '#password';
+  const ctaButton = '#login > form > div.auth-form-body.mt-3 > input.btn.btn-primary.btn-block';
+  const authInput = '#otp';
+  const authButton = '#login > div.auth-form-body.mt-3 > form > button';
+  let page = await utils.getPage(browser);
+
+  await Promise.all([
+    page.goto(pageUrl, { waitUntil: 'networkidle0' }),
+    page.waitForNavigation({ waitUntil: 'domcontentloaded' })
+  ]);
+
+  await page.waitFor(1000); // 1s
+
+  // Get last html content
+  page = await utils.getPage(browser);
+
+  // Tap page
+  await page.mainFrame().tap('body');
+
+  // Fill email Input
+  await utils.fillInput(page, emailInput, user.email);
+
+  // Fill password Input
+  await utils.fillInput(page, passwordInput, user.password);
+
+  // Press call to action button
+  await page.waitForSelector(ctaButton);
+  // await Promise.all([
+    // page.click(ctaButton),
+  await page.focus(ctaButton);
+  await page.keyboard.press('Enter');
+  await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+  // ]);
+
+  await page.waitFor(1000); // 1s
+
+  // Get last html content
+  page = await utils.getPage(browser);
+
+  // Tap page
+  await page.mainFrame().tap('body');
+
+  // Fill Auth Input
+  await utils.fillInput(page, authInput, user.auth);
+
+  // Press auth button
+  await page.waitForSelector(authButton);
+  // await Promise.all([
+    // page.click(authButton),
+  await page.focus(authButton);
+  await page.keyboard.press('Enter');
+  await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+  // ]);
+}
+
+module.exports.localhost = localhost;
+module.exports.github = github;

@@ -7,7 +7,7 @@ const puppeteer = require('puppeteer');
 async function getBrowser() {
   // OPTION 1 - Launch new.
   // const browser = await puppeteer.launch({
-  //     headless: false // Puppeteer is 'headless' by default.
+    // headless: false // Puppeteer is 'headless' by default.
   // });
 
   // OPTION 2 - Connect to existing.
