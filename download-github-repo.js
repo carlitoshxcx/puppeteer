@@ -1,5 +1,5 @@
 const REPO = require('./data/repo');
-const credentials = require('./data/credentials');
+const credentials = require('./data/credentials/github');
 const utils = require('./helpers/utils');
 const selectedBrowser = require('./helpers/browser');
 const loginAt = require('./helpers/login');

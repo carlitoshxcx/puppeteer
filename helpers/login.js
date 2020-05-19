@@ -4,7 +4,7 @@ const utils = require('../helpers/utils');
  * Login user in marketplace
  * @param browser: Browser
  */
-async function localhost(browser, user) {
+async function rhizom(browser, user) {
   const pageUrl = `http://localhost:8080/login`;
   let page = await utils.getPage(browser);
 
@@ -101,5 +101,5 @@ async function github(browser, user) {
   // ]);
 }
 
-module.exports.localhost = localhost;
+module.exports.rhizom = rhizom;
 module.exports.github = github;

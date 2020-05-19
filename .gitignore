@@ -1,5 +1,5 @@
 # Files
-data/credentials.js
+data/credentials/*.js
 
 # Logs
 logs
