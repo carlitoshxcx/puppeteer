@@ -7,6 +7,15 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Add new product",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/add-new-product.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Access Page",
       "skipFiles": [
         "<node_internals>/**"
